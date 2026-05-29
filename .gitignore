@@ -1,0 +1,28 @@
+# Compiled class files
+*.class
+
+# Build directories
+build/
+dist/
+out/
+bin/
+
+# NetBeans
+nbproject/private/
+nbbuild/
+nbdist/
+
+# IDE
+.idea/
+*.iml
+.settings/
+.classpath
+.project
+
+# OS
+.DS_Store
+Thumbs.db
+*:Zone.Identifier
+
+# Logs
+*.log
