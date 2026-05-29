@@ -1,132 +1,111 @@
-# ⚔️ Age of War — Jeu de stratégie en Java
+# Age of War — Java
 
-Un jeu de stratégie en temps réel inspiré du célèbre jeu Flash **Age of War**, développé en Java avec **Swing** dans le cadre d'un projet académique.
+A 2D real-time strategy game inspired by the classic "Age of War" flash game, built with Java Swing.
 
-> **Projet réalisé par** Romain Sebire & Joris Schwarz — IMT Mines Alès
-
----
-
-## 📖 Description
-
-Age of War est un jeu de stratégie en 1v1 (joueur vs IA) où deux bases s'affrontent à travers **3 époques** d'évolution. Le joueur doit détruire la base adverse tout en protégeant la sienne.
-
-### Mécaniques de jeu
-
-- **3 types d'unités** : Mêlée, Distance et Tank — chacun avec des caractéristiques propres (PV, dégâts, portée, coût, vitesse)
-- **3 époques d'évolution** : Faites évoluer votre civilisation pour débloquer des unités plus puissantes (visuels et stats améliorés)
-- **Système économique** : Gagnez de l'argent en éliminant des ennemis pour recruter des troupes ou évoluer
-- **IA adverse** : L'adversaire recrute et envoie automatiquement des unités
-- **Bande-son** : Musique d'ambiance intégrée
-- **Interface graphique complète** : Affichage du plateau, sprites animés, boutons de contrôle, HUD avec stats en temps réel
-
-### Captures d'écran conceptuelles
-
-Le jeu affiche :
-- Un **plateau de jeu** avec un arrière-plan thématique
-- Les **bases** du joueur (gauche) et de l'adversaire (droite) avec barres de vie
-- Les **unités** se déplaçant et combattant sur le champ de bataille
-- Un **HUD** avec l'argent disponible, les coûts des unités et un bouton d'évolution
+> **By** Romain Sebire & Joris Schwarz — IMT Mines Alès
 
 ---
 
-## 🏗️ Architecture du projet
+## Description
+
+Age of War is a 1v1 (player vs AI) strategy game where two bases fight across **3 eras** of evolution. Destroy the enemy base while defending your own.
+
+### Game Mechanics
+
+- **3 unit types**: Melee, Ranged, and Tank — each with unique stats (HP, damage, range, cost)
+- **3 eras of evolution**: Evolve your civilization to unlock stronger units with improved visuals and stats
+- **Economy system**: Earn gold by eliminating enemies to recruit troops or evolve
+- **Enemy AI**: The opponent automatically spawns and sends units
+- **Soundtrack**: Integrated background music
+- **Full GUI**: Game board display, sprites, control buttons, real-time HUD
+
+---
+
+## Project Structure
 
 ```
-src/projet_ageofwar/
-├── Projet_AgeOfWar.java    # Point d'entrée (main)
-├── Affichage.java           # Interface graphique (Swing JFrame, boutons, HUD)
-├── PlateauDeJeu.java        # Logique du plateau (déplacements, combats, timers)
-├── Base.java                # Gestion des bases (PV, argent, évolution, rendu)
-├── Unite.java               # Unité du joueur (déplacement, combat, rendu)
-├── UniteAdversaire.java     # Unité adverse (IA, déplacement inversé)
-├── Donnees.java             # Chargement des données depuis XML (JDOM2)
-└── graphiques/              # Sprites (PNG) + fond + bande-son (WAV)
+src/age_of_war/
+├── AgeOfWar.java       — Entry point (main)
+├── Display.java        — GUI management (Swing JFrame, buttons, HUD)
+├── GameBoard.java      — Core game logic (movement, combat, timers)
+├── GameData.java       — XML data loader (unit/base stats)
+├── Base.java           — Player/enemy base (HP, gold, rendering)
+├── Unit.java           — Player unit (movement, combat, rendering)
+├── EnemyUnit.java      — Enemy unit (reversed movement)
+└── assets/             — Sprites (PNG) + background + soundtrack (WAV)
     ├── background.jpg
-    ├── base_epoque{1-3}.png / base_epoque{1-3}_adversaire.png
-    ├── melee_epoque{1-3}.png / melee_epoque{1-3}_adversaire.png
-    ├── distance_epoque{1-3}.png / distance_epoque{1-3}_adversaire.png
-    ├── tank_epoque{1-3}.png / tank_epoque{1-3}_adversaire.png
+    ├── base_era{1-3}.png / base_era{1-3}_enemy.png
+    ├── melee_era{1-3}.png / melee_era{1-3}_enemy.png
+    ├── distance_era{1-3}.png / distance_era{1-3}_enemy.png
+    ├── tank_era{1-3}.png / tank_era{1-3}_enemy.png
     └── soundtrack.wav
+
+characters.xml          — Unit & base configuration data
 ```
 
-### Données XML
+### XML Data
 
-Les caractéristiques de chaque unité et base (PV, dégâts, portée, coût, dimensions des sprites) sont stockées dans `caracteristiquesPersonnages.xml` et chargées dynamiquement au lancement via la bibliothèque **JDOM2**.
+All unit and base characteristics (HP, damage, range, cost, sprite dimensions) are stored in `characters.xml` and loaded dynamically at startup using the standard `javax.xml.parsers` DOM parser.
 
 ---
 
-## 🛠️ Technologies
+## Technologies
 
-| Composant | Technologie |
-|-----------|-------------|
-| Langage | **Java** |
-| Interface graphique | **Java Swing** (JFrame, JPanel, JButton, JLabel) |
-| Rendu graphique | `paintComponent()` personnalisé avec `Graphics.drawImage()` |
-| Données de jeu | **XML** parsé avec **JDOM2** |
+| Component | Technology |
+|-----------|------------|
+| Language | **Java** |
+| GUI | **Java Swing** (JFrame, JPanel, JButton, JLabel) |
+| Rendering | Custom `paintComponent()` with `Graphics.drawImage()` |
+| Game data | **XML** parsed with `javax.xml.parsers` (DOM) |
 | Audio | `javax.sound.sampled` (Clip, AudioInputStream) |
-| Temporisation | `javax.swing.Timer` pour la boucle de jeu |
-| Build | **Apache Ant** (NetBeans) |
+| Game loop | `javax.swing.Timer` |
 
 ---
 
-## 🚀 Prérequis & Exécution
+## Prerequisites & Running
 
-### Prérequis
+### Prerequisites
 
-- **Java JDK 8+**
-- **JDOM2** (`jdom-2.0.6.1.jar`) — bibliothèque de parsing XML
+- **Java 17+** (uses switch expressions)
 
-### Compilation et exécution
+### Compile and run
 
 ```bash
-# Depuis le dossier version-soumise/ (ou version-travail/)
-javac -cp ".:path/to/jdom-2.0.6.1.jar" -d build src/projet_ageofwar/*.java
-java -cp "build:path/to/jdom-2.0.6.1.jar" projet_ageofwar.Projet_AgeOfWar
+# Compile
+javac -d build src/age_of_war/*.java
+
+# Run (from project root)
+java -cp build age_of_war.AgeOfWar
 ```
 
-Ou via **NetBeans** : ouvrir le projet et exécuter directement.
+---
+
+## How to Play
+
+1. Launch the game and click **"Start Game"**
+2. Use the buttons to spawn units:
+   - **Melee Warrior** — Close combat unit (cheap)
+   - **Ranged Warrior** — Ranged unit (longer reach)
+   - **Tank** — Heavy unit (high HP and damage, expensive)
+3. Click **"Evolve"** to advance to the next era (upgrades all stats)
+4. Destroy the enemy base to win!
+5. **Replay** or **Quit** at game over
 
 ---
 
-## 📂 Versions du projet
+## Java Concepts Demonstrated
 
-Ce dépôt contient **deux versions** du projet :
-
-| Dossier | Description |
-|---------|-------------|
-| `version-travail/` | Version de travail (développement initial) |
-| `version-soumise/` | Version finale soumise pour évaluation — avec Javadoc complète sur l'ensemble des méthodes |
-
-Les deux versions partagent **exactement la même logique de jeu**. La version soumise ajoute une documentation Javadoc complète et supprime les imports inutilisés.
-
----
-
-## 🎮 Comment jouer
-
-1. Lancez le jeu et cliquez sur **"Démarrer le jeu"**
-2. Utilisez les boutons pour recruter des unités :
-   - **Guerrier mêlée** — Unité de combat rapproché (bon marché)
-   - **Guerrier distance** — Unité à distance (portée supérieure)
-   - **Tank** — Unité lourde (PV et dégâts élevés, coûteux)
-3. Cliquez sur **"Évoluer"** pour passer à l'époque suivante (améliore toutes les stats)
-4. Détruisez la base adverse pour gagner !
-5. **Rejouer** ou **Terminer** en fin de partie
+- Object-oriented programming (inheritance, encapsulation)
+- GUI development with Java Swing
+- Custom rendering (`paintComponent`, `Graphics`)
+- Event handling (ActionListener, Timer)
+- XML parsing with DOM
+- Audio playback with `javax.sound.sampled`
+- Resource loading from classpath
+- Modular architecture (display / logic / data separation)
 
 ---
 
-## 📚 Concepts Java démontrés
+## License
 
-- Programmation orientée objet (héritage, encapsulation)
-- Interface graphique avec Java Swing
-- Rendu personnalisé (`paintComponent`, `Graphics2D`)
-- Gestion d'événements (ActionListener, Timer)
-- Parsing XML avec JDOM2
-- Gestion audio avec `javax.sound.sampled`
-- Chargement de ressources depuis le classpath
-- Architecture modulaire (séparation affichage / logique / données)
-
----
-
-## 📝 Licence
-
-Projet académique — IMT Mines Alès.
+Academic project — IMT Mines Alès.
