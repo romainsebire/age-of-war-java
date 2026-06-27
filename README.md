@@ -6,6 +6,12 @@ A 2D real-time strategy game inspired by the classic "Age of War" flash game, bu
 
 ---
 
+## Demo Video
+
+https://github.com/user-attachments/assets/2ffb48de-e79f-406e-a7f6-418c204debd6
+
+---
+
 ## Description
 
 Age of War is a 1v1 (player vs AI) strategy game where two bases fight across **3 eras** of evolution. Destroy the enemy base while defending your own.
